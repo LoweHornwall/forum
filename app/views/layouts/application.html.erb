@@ -17,14 +17,15 @@
   		Email: <%= text_field_tag :email %>
   		Password: <%= password_field_tag :password %>
   		<%= submit_tag "Submit" %>
-  		<%= @error %>
 	<% end %>	
 	Don't have an account? Register here:
 	<%= link_to 'Register', new_user_path %>
   <% end %>
 
-
-
+  <% flash.each do |name, msg| -%>
+    <%= content_tag :h2, msg, class: name %>
+  <% end -%>
+ 
     <%= yield %>
   </body>
 </html>

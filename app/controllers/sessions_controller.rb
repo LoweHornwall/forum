@@ -8,15 +8,15 @@ class SessionsController < ApplicationController
 
 		if @user && @user.authenticate(params[:password])
 			session[:user_id] = @user.id
-			redirect_to root_path
+			redirect_back(fallback_location: root_path)
 		else
-			@error = "Log in failed! Wrong email adress or password."
-			render 'home/index'
+			flash[:notice] = "Login failed. Wrong Email or password."
+			redirect_back(fallback_location: root_path)
 		end		
 	end
 
 	def destroy
 		session[:user_id] = nil
-		redirect_to root_path
+		redirect_back(fallback_location: root_path)
 	end
 end

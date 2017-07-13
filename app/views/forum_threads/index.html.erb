@@ -1,0 +1,17 @@
+
+<% if current_user %>
+	<h1><%= link_to "New thread", new_forum_thread_path %></h1>
+<% else %>
+	<h2>Sign in to make a thread</h2>	
+<% end %>	
+<h1>Threads</h1>
+
+<% @forum_threads.each do |thread| %>
+	<table>
+		<tr>
+			<td>Topic: <%= thread.name %></td>
+			<td>Creator: <%= thread.creator_name %></td>
+			<td><%= link_to 'show', forum_thread_path(thread) %></td>
+		</tr>
+	</table>
+<% end %>	
