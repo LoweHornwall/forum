@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :users
-  resources :forum_threads
+  resources :forum_threads, param: :name 
+
+  get '/forum_threads/:name/:page_num' => 'thread_pages#show', :as => 'thread_page'
 
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'

@@ -4,7 +4,7 @@ class ForumThreadsController < ApplicationController
 	end
 
 	def show
-		@forum_thread = ForumThread.find(params[:id])
+		@forum_thread = ForumThread.find_by_name(params[:name])
 	end
 
 	def new
