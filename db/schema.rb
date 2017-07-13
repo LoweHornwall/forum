@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170713120845) do
+ActiveRecord::Schema.define(version: 20170713130247) do
 
   create_table "forum_threads", force: :cascade do |t|
     t.string "name"
@@ -19,6 +19,15 @@ ActiveRecord::Schema.define(version: 20170713120845) do
     t.datetime "updated_at", null: false
     t.text "description"
     t.string "creator_name"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.integer "creator_id"
+    t.string "creator_name"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "thread_page_id"
   end
 
   create_table "thread_pages", force: :cascade do |t|

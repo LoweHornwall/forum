@@ -18,7 +18,13 @@ class ForumThreadsController < ApplicationController
 		@forum_thread.creator_id = @creator.id
 		@forum_thread.creator_name = @creator.name
 
-		if @forum_thread.save
+		if @forum_thread.save 
+			# This code needs to be looked at and made cleaner.
+			@initial_page = ThreadPage.new
+			@initial_page.forum_thread_id = @forum_thread.id
+			@initial_page.page_num = 1
+			@initial_page.save
+
 			redirect_to forum_threads_path
 		else
 			render 'new'

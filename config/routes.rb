@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   get '/forum_threads/:name/:page_num' => 'thread_pages#show', :as => 'thread_page'
 
+  post '/forum_threads/:name/:page_num/post' => 'posts#create', :as => 'create_post'
+
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'

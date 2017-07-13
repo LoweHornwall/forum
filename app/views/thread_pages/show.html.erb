@@ -6,4 +6,30 @@
 
 <p><%= @thread.description %></p>
 	
+<% @posts.each do |post| %>
+	<table>
+		<tr>
+			<td>poster: <%= post.creator_name %></td>
+			<td>message: <%= post.message %></td>
+		</tr>
+	</table>
+<% end %>	
 
+<% if current_user %>
+	<h2>Create post</h2>
+
+	<%= form_for :post, url: create_post_path do |f| %>
+		<p>
+			<%= f.text_area :message, :cols => "40", :rows => "10" %>
+		</p>
+
+		<p>
+			<%= f.submit %>
+		</p>
+	<% end %>
+<% end %>
+
+
+<% @thread.thread_pages.each do |page| %>
+	<%= link_to page.page_num, thread_page_path(@thread, page.page_num)%>
+<% end %>
