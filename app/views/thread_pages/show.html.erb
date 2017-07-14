@@ -23,27 +23,30 @@
 		</div>
 		<div class="postContent">
 			<small class="info">Posted at: <%= post.created_at %></small>
-		 	<p><%= post.message %></p>
+			<!--simple_format translates formating(newlines etc) into browser-readable formating-->
+		 	<p><%= simple_format(post.message) %></p>
 		 </div>	
 	<% end %>	
 </div>
 
-<% if @thread.thread_pages.exists?(page_num: params[:page_num].to_i + 1) %>
-	bal
-<% end %>	
+<div id="pageArea">
+	<%= render 'pageArea' %>
+</div>
 
 <% if current_user %>
-	<h2>Create post</h2>
+	<div id="createPostArea">
+		<h2>Create post</h2>
 
-	<%= form_for :post, url: create_post_path do |f| %>
-		<p>
-			<%= f.text_area :message, :cols => "40", :rows => "10" %>
-		</p>
+		<%= form_for :post, url: create_post_path do |f| %>
+			<p>
+				<%= f.text_area :message, :rows => "10", style: 'width:99%;' %>
+			</p>
 
-		<p>
-			<%= f.submit %>
-		</p>
-	<% end %>
+			<p>
+				<%= f.submit %>
+			</p>
+		<% end %>
+	</div>
 <% end %>
 
 <% flash.each do |name, msg| -%>

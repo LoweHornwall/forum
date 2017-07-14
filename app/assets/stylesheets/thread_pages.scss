@@ -50,6 +50,21 @@
 	padding: 1px;
 }
 
+#createPostArea {
+	width: 50%;
+	margin: auto;
+	background-color: lightgrey;
+	padding: 3px;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 5px;	
+	margin-top: 2%;
+}
+
 .info {
 	color: grey;
+}
+
+.button_to {
+	display: inline;
 }
