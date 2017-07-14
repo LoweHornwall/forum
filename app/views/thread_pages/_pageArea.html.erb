@@ -1,0 +1,14 @@
+page <%= params[:page_num] %> of <%= @thread.thread_pages.count %> | 
+<% if @thread.thread_pages.exists?(page_num: params[:page_num].to_i - 1) %>
+	-
+<% end %>
+<% @thread.thread_pages.each do |page| %>	
+	<% if page.page_num == params[:page_num].to_i %>
+		<%= page.page_num %>
+	<% else %>
+		<%= link_to page.page_num, thread_page_path(@thread, page.page_num)%>
+	<% end %>	
+<% end %>		
+<% if @thread.thread_pages.exists?(page_num: params[:page_num].to_i + 1) %>
+	+
+<% end %>

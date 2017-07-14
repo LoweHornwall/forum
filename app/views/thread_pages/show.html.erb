@@ -1,27 +1,36 @@
-<h1>showing Thread</h1>
 
 <%= link_to 'back to threads', forum_threads_path %>
 
-<h2><%= @thread.name %></h2>
+<div id="description">
+	<div id="descriptionInfo">
+		<small class="info">Created by: <%= @thread.creator_name %> | Started at: <%= @thread.created_at %></small>
+		<h2><%= @thread.name %></h2>
 
-<p><%= @thread.description %></p>
-	
-<% @posts.each do |post| %>
-	<table>
-		<tr>
-			<td>poster: <%= post.creator_name %></td>
-			<td>message: <%= post.message %></td>
-		</tr>
-	</table>
-<% end %>	
+	</div>
+	<div id="descriptionContent">	
+		<p><%= @thread.description %></p>
+	</div>
+</div>	
 
-<% @thread.thread_pages.each do |page| %>
-	<% if page.page_num == params[:page_num].to_i %>
-		<%= page.page_num %>
-	<% else %>
-		<%= link_to page.page_num, thread_page_path(@thread, page.page_num)%>
+<div id="pageArea">
+	<%= render 'pageArea' %>
+</div>
+
+<div id="postsArea">
+	<% @posts.each do |post| %>
+		<div class="postInfo">
+			<%= post.creator_name %>
+		</div>
+		<div class="postContent">
+			<small class="info">Posted at: <%= post.created_at %></small>
+		 	<p><%= post.message %></p>
+		 </div>	
 	<% end %>	
-<% end %>
+</div>
+
+<% if @thread.thread_pages.exists?(page_num: params[:page_num].to_i + 1) %>
+	bal
+<% end %>	
 
 <% if current_user %>
 	<h2>Create post</h2>
