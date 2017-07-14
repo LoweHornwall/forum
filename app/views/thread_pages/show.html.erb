@@ -15,6 +15,14 @@
 	</table>
 <% end %>	
 
+<% @thread.thread_pages.each do |page| %>
+	<% if page.page_num == params[:page_num].to_i %>
+		<%= page.page_num %>
+	<% else %>
+		<%= link_to page.page_num, thread_page_path(@thread, page.page_num)%>
+	<% end %>	
+<% end %>
+
 <% if current_user %>
 	<h2>Create post</h2>
 
@@ -29,7 +37,8 @@
 	<% end %>
 <% end %>
 
+<% flash.each do |name, msg| -%>
+	<%= content_tag :h2, msg, class: name %>
+<% end -%>
 
-<% @thread.thread_pages.each do |page| %>
-	<%= link_to page.page_num, thread_page_path(@thread, page.page_num)%>
-<% end %>
+
