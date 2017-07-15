@@ -1,17 +1,18 @@
-page <%= params[:page_num] %> of <%= @thread_pages.count %> | 
+page <%= @page.page_num %> of <%= @thread_pages.count %> | 
 <!--Display a back button if one page lower than current page exists-->
-<% if @thread_pages.exists?(page_num: params[:page_num].to_i - 1) %>
-	<%= link_to 'Prev', thread_page_path(@thread, params[:page_num].to_i - 1) %>
+<% if @thread_pages.exists?(page_num: @page.page_num - 1) %>
+	<%= link_to 'Prev', thread_page_path(@thread, @page.page_num - 1) %>
 <% end %>
 
 <% @thread_pages.each do |page| %>	
-	<% if page.page_num == params[:page_num].to_i %>
+	<!-- @page.page_num is currently viewed page-->
+	<% if page.page_num == @page.page_num %>
 		<%= page.page_num %>
 	<% else %>
 		<%= link_to page.page_num, thread_page_path(@thread, page.page_num)%>
 	<% end %>	
 <% end %>		
 <!--Display a Next button if one page higher than current page exists-->
-<% if @thread_pages.exists?(page_num: params[:page_num].to_i + 1) %>
-	<%= link_to 'Next', thread_page_path(@thread, params[:page_num].to_i + 1) %>
+<% if @thread_pages.exists?(page_num: @page.page_num + 1) %>
+	<%= link_to 'Next', thread_page_path(@thread, @page.page_num + 1) %>
 <% end %>
