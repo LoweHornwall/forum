@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   post '/login' => 'sessions#create'
   get '/logout' => 'sessions#destroy'
 
+  get '/forum/:name/:forum_page_num' => 'forums#show', :as => 'forum_page'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

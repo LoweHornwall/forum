@@ -1,0 +1,20 @@
+<h1><%= params[:forum_page_num] %></h1>
+<h1><%= params[:name] %></h1>
+<h1>there are <%= @page_count %> pages</h1>
+
+<% (1..@page_count).each do |page| %>
+	<%= link_to page, forum_page_path("asd", page) %>
+<% end %>	
+
+<div id="postsArea">
+	<% @wanted_posts.each do |post| %>
+		<div class="postInfo">
+			<%= post.creator_name %>
+		</div>
+		<div class="postContent">
+			<small class="info">Posted at: <%= post.created_at %></small>
+			<!--simple_format translates formating(newlines etc) into browser-readable formating-->
+		 	<p><%= simple_format(post.message) %></p>
+		 </div>	
+	<% end %>	
+</div>
