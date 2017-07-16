@@ -1,20 +1,36 @@
-<h1><%= params[:forum_page_num] %></h1>
-<h1><%= params[:name] %></h1>
-<h1>there are <%= @page_count %> pages</h1>
+<%= link_to 'Back', forums_path %>
 
-<% (1..@page_count).each do |page| %>
-	<%= link_to page, forum_page_path("asd", page) %>
+<% if current_user %>
+	<h3><%= link_to 'Create new thread', new_forum_thread_path %></h3>
+<% else %>
+	<h2>Sign in to make a thread</h2>	
 <% end %>	
 
-<div id="postsArea">
-	<% @wanted_posts.each do |post| %>
-		<div class="postInfo">
-			<%= post.creator_name %>
-		</div>
-		<div class="postContent">
-			<small class="info">Posted at: <%= post.created_at %></small>
-			<!--simple_format translates formating(newlines etc) into browser-readable formating-->
-		 	<p><%= simple_format(post.message) %></p>
-		 </div>	
+<div id="description">
+	<div id="descriptionInfo">
+		<h1><%= @forum.name %></h1>
+	</div>
+	<div id="descriptionContent">
+		<%= @forum.description %>
+	</div>	
+</div>
+
+<div id="pageArea">
+<%= render 'pages' %>
+	<%= render 'sort' %>	
+</div>
+	
+<div id="forumThreadsArea">
+	<% if @wanted_threads %>
+		<% @wanted_threads.each do |thread| %>
+			<div class="forumThread">
+				<%= link_to thread.name, thread_page_path(thread, 1) %>
+				<div class="forumThreadInfo">
+					Created by: <%= thread.creator_name %>
+					<%= thread.created_at %>
+					<span class="info">posts: <%= thread.posts.count %></span>
+				</div>		
+			</div>		
+		<% end %>	
 	<% end %>	
 </div>

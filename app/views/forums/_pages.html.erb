@@ -1,0 +1,19 @@
+page <%= @current_page %> of <%= @page_count %> | 
+<% if @current_page > 1 %>
+	<!--request.parameters.merge keeps the old url and changes only what is specified-->
+	<%= link_to 'Prev', request.parameters.merge({:forum_page_num => @current_page - 1}) %>
+<% end %>	
+
+<% (1..@page_count).each do |page| %>
+	<% if page == @current_page %>
+		<strong><%= page %></strong>
+	<% else %>
+		<%= link_to page, request.parameters.merge({:forum_page_num => page}) %>
+	<% end %>	
+<% end %>
+
+
+<% if @current_page < @page_count %>
+	<%= link_to 'Next', request.parameters.merge({:forum_page_num => @current_page + 1 }) %>
+<% end %>
+|

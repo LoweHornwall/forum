@@ -1,47 +1,44 @@
 class ForumsController < ApplicationController
-	def index
+	include Pagination
 
+	def index
+		@forums = Forum.all
 	end
 
 	def show
-		@posts = Post.all
-		@page_size = 5
+		# Prevents sql injections in order command
+		@forum = Forum.find_by_name(params[:name])
 
-		if @wanted_posts = get_page_content(@posts, @page_size, params[:forum_page_num].to_i)
+		sanitized_order = ForumThread.send(:sanitize_sql_for_order, params[:sort_by])
+		@forum_threads = @forum.forum_threads.order(sanitized_order).all
+		@page_size = 10
+		@current_page = params[:forum_page_num].to_i
 
+		#fastnar i en loop när inga threads finns!
+		@wanted_threads = get_page_content(@forum_threads, @page_size, @current_page)
+		@page_count = divide_pages(@forum_threads, @page_size)
+
+		if @current_page < 1 || @current_page > @page_count
+			redirect_to forum_page_path(@forum, 1)
+		end
+	end
+
+	def new
+		@forum = Forum.new
+	end
+
+	def create
+		@forum = Forum.new(forum_params)
+
+		if @forum.save
+			redirect_to forums_path
 		else
-			redirect_to forum_page_path(params[:name], 1)
+			render 'new'
 		end	
-
-		@page_count = divide_pages(@posts, @page_size)
 	end
 
 	private
-		def get_page_content(list, page_size, wanted_page)
-			# ensures the validity of the requested page
-			if wanted_page < 1 || wanted_page > divide_pages(list, page_size)
-				return nil
-			end	
-			
-			first_list_obj = (wanted_page - 1) * page_size
-			puts "First index #{first_list_obj}"
-
-			last_list_obj = first_list_obj + page_size - 1
-			puts "Second index #{last_list_obj}"
-
-			desired_objects = list[first_list_obj..last_list_obj]
-
-			
-			return desired_objects
-		end
-
-		def divide_pages(list, page_size)
-			obj_num = list.count
-
-			last_page_rest = obj_num % page_size
-
-			page_count = ((list.count - last_page_rest) / page_size) + 1 
-
-			return page_count
+		def forum_params
+			params.require(:forum).permit(:name, :description)
 		end
 end

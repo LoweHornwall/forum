@@ -4,6 +4,8 @@ class ForumThread < ApplicationRecord
 	has_many :thread_pages
 	has_many :posts, through: :thread_pages
 
+	validates :name, length: {maximum: 40}, presence: true
+	validates :description, length: {maximum: 100}
 	def to_param
 		name
 	end	

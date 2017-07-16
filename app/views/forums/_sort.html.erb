@@ -1,0 +1,11 @@
+sort with:
+<% if params[:sort_by] == nil || params[:sort_by] == 'created_at ASC' %>
+	<strong>time created Ascending</strong> | 
+<% else %>
+	<%= link_to 'time created Ascending', request.query_parameters.merge({:sort_by => 'created_at ASC'}) %>
+<% end %>	
+<% if params[:sort_by] == 'created_at DESC' %>
+	<strong>time created Descending</strong>
+<% else %>
+	<%= link_to 'time created Descending', request.query_parameters.merge({:sort_by => 'created_at DESC'}) %>
+<% end %>

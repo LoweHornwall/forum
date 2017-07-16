@@ -1,0 +1,18 @@
+<!--EXTREMELY PLACEHOLDER-->
+<% if current_user && current_user.name == "Lowe" %>
+	<%= link_to 'create new subforum', forums_new_path %>
+<% end %>
+
+<div id="forumsListArea">
+	<% @forums.each do |forum| %>
+		<div class="forum">
+			<div class="forumHeader">
+			<%= link_to forum.name, forum_page_path(forum, 1) %>
+			</div>
+			<div class="forumInfo">
+				<%= forum.description %>
+				<small class="info">Threads: <%= forum.forum_threads.count %></small>
+			</div>
+		</div>	
+	<% end %>	
+</div>
