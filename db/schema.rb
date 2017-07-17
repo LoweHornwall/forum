@@ -12,12 +12,8 @@
 
 ActiveRecord::Schema.define(version: 20170715115712) do
 
-  create_table "forum_pages", force: :cascade do |t|
-    t.integer "forum_id"
-    t.integer "forum_page_num"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "forum_threads", force: :cascade do |t|
     t.string "name"
